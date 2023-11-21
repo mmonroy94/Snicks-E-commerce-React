@@ -1,4 +1,4 @@
-import { GET_ALL_PRODUCTS, SIGN_IN, SHOW_CART, ADD_ITEM_CART, DELETE_ITEM_CART, DECREASE_ITEM_QUANTITY } from "./action-types";
+import { GET_ALL_PRODUCTS, SIGN_IN, SHOW_CART, ADD_ITEM_CART, DELETE_ITEM_CART, DECREASE_ITEM_QUANTITY, CLEAR_CART, CART_TOTAL } from "./action-types";
 import axios from 'axios';
 
 export const getAllProducts = () => {
@@ -66,6 +66,26 @@ export const decreaseQuantity = (data) => {
             }
         catch(error){
             alert(error.response.data) 
+        }
+    }
+}
+
+export const clearCart = () => {
+    return async (dispatch) => {
+        try {
+            dispatch({ type: CLEAR_CART})
+        } catch (error) {
+            alert(error.response.data)
+        }
+    }
+}
+
+export const cartTotal = (value) => {
+    return async (dispatch) => {
+        try {
+            dispatch({type: CART_TOTAL, payload: value})
+        } catch (error) {
+            alert(error.response.data)
         }
     }
 }

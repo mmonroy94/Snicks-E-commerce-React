@@ -6,25 +6,20 @@ import { useNavigate } from 'react-router-dom'
 import axios from "axios";
 import { signIn } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
+import style from './Login.module.css'
 
 const Login = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
-  const [ data, setData ] = useState({
+  const [data, setData] = useState({
     email: '',
     password: ''
   })
 
-  const [ errors, setErrors] = useState({
+  const [errors, setErrors] = useState({
     email: '',
     password: ''
   })
-  
-  // const [showPassword, setShowPassword] = useState(false);
-
-  // const togglePasswordVisibility = () => {
-  //   setShowPassword(!showPassword);
-  // };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -63,64 +58,57 @@ const Login = () => {
       });
   };
 
-return(
-  <div className="container">
-    <div className="row align-items-center">
-
-      {/* CONTENEDOR CENTRAL */}
-      <div className='d-flex justify-content-center align-items-center'>
-
-        <div className="col-md-5 image-container">
-          <img src={loginImg} alt="whiteSneakersImage" className="img-fluid"/>
-        </div>
+  return (
+    <div className={`container ${style.loginComponent}`}>
       
-        <div className="col-md-7 d-flex justify-content-center align-items-center">
-        <div className="text-container d-flex flex-column justify-content-center align-items-center">
-          
-          <h2 className="display-4">¡Te damos la bienvenida!</h2>
-          <p className="lead text-secondary px-2">Iniciar sesión</p>
+      <div className={style.login}>
 
-          <form onSubmit={handleSubmit} id="loginForm" className="container col">
-            
-            <div className="pt-4" id="emailContainer">
-              <label htmlFor="email" className="form-label">Correo electrónico</label>
-              <input onChange={handleChange} type="email" name='email' id="emailInput"  placeholder="ejemplo@correo.com" value={data.email} className="form-control" />
-              <div className="error-container">
-                  {errors.email ? (
-                    <p className='text-danger'>{errors.email}</p>
-                  ) : (
-                    <p></p>
-                  )}
+        {/* CONTENEDOR CENTRAL */}
+        <div className='d-flex justify-content-center align-items-center'>
+
+          <div className="col-md d-flex">
+            <div className={`text-container d-flex flex-column justify-content-center align-items-center ${style.loginContainer}`}>
+              
+              <h2 className="display-4">¡Te damos la bienvenida!</h2>
+              <p className="lead text-secondary px-2">Iniciar sesión</p>
+
+              <form onSubmit={handleSubmit} id="loginForm" className="container col">
+
+                <div className="pt-4" id="emailContainer">
+                  <label htmlFor="email" className="form-label">Correo electrónico</label>
+                  <input onChange={handleChange} type="email" name='email' id="emailInput" placeholder="ejemplo@correo.com" value={data.email} className="form-control" />
+                  <div className="error-container">
+                    {errors.email ? (
+                      <p className='text-danger'>{errors.email}</p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mb-3" id="passwordContainer">
+                  <label htmlFor="passwordInput" className="form-label">Contraseña</label>
+                  <input onChange={handleChange} type='password' className="form-control" name="password" id="passwordInput" value={data.password} />
+                </div>
+
+                <div className="d-grid pt-4">
+                  <button className="btn btn-primary" type="submit" id="submitButton" disabled={disableByEmptyProps()}>
+                    Iniciar sesión
+                  </button>
+                </div>
+              </form>
+
+              <div className="pt-4">
+                <p>No tengo una cuenta, <NavLink to='/registro'>quiero registrarme.</NavLink></p>
               </div>
+
             </div>
-
-            <div className="mb-3" id="passwordContainer">
-              <label htmlFor="passwordInput" className="form-label">Contraseña</label>
-              <input onChange={handleChange} type='password' className="form-control" name="password" id="passwordInput" value={data.password}/>
-              {/* <input onChange={handleChange} type={showPassword ? 'text' : 'password'} className="form-control" name="password" id="passwordInput" value={data.password}/> */}
-                {/* <button onClick={togglePasswordVisibility}>
-                  {!showPassword ? <i className="bi bi-eye"></i> : <i className="bi bi-eye-fill"></i>}
-                </button> */}
-            </div>          
-
-            <div className="d-grid pt-4">
-              <button className="btn btn-primary" type="submit" id="submitButton" disabled={disableByEmptyProps()}>
-                Iniciar sesión
-              </button>
-            </div>
-          </form>
-
-          <div className="pt-4">
-            <p>No tengo una cuenta, <NavLink to='/registro'>quiero registrarme.</NavLink></p>
           </div>
 
         </div>
-      </div>
 
       </div>
-    
     </div>
-  </div>
   )
 
 }

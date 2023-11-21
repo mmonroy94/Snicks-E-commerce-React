@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom'
 import axios from "axios";
-import loginImg from '../loginImg.jpg'
 import { validateLogup } from '../../formValidation'
 import { signIn } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
+import style from './Logup.module.css'
 
 const Logup = () => {
   const dispatch = useDispatch()
@@ -65,16 +65,9 @@ const Logup = () => {
   };
 
     return(
-      <div className="container">
-      <div className="row align-items-center">
+      <div className={`container ${style.logupComponent}`}>
+      <div className={style.logup}>
 
-
-        {/* CONTENEDOR IMAGEN */}
-        
-        <div className="col-md-5 image-container">
-          <img src={loginImg} alt="whiteSneakersImage" className="img-fluid" />
-        </div>
-        
         {/* CONTENEDOR TEXTO Y FORMULARIO */}
 
         <div className="col-md-5 text-container p-4 d-flex flex-column h-100 mb-5">

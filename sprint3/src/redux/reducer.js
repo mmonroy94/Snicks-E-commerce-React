@@ -1,11 +1,13 @@
-import { GET_ALL_PRODUCTS, SIGN_IN, SHOW_CART, ADD_ITEM_CART, DELETE_ITEM_CART, DECREASE_ITEM_QUANTITY } from "./action-types";
+import { GET_ALL_PRODUCTS, SIGN_IN, SHOW_CART, ADD_ITEM_CART, DELETE_ITEM_CART, DECREASE_ITEM_QUANTITY, CLEAR_CART, CART_TOTAL } from "./action-types";
+import { cartTotal } from "./actions";
 
 const initialState = {
     allProducts: [],
     allProductsCopy: [],
     userLogged: '',
     showCart: '',
-    shoppingCartItems: []
+    shoppingCartItems: [],
+    cartTotal: 0
 }
 
 const reducer = (state = initialState, action) => {
@@ -67,6 +69,18 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 shoppingCartItems: filteredProducts,
+            }
+
+        case CLEAR_CART:
+            return{
+                ...state, 
+                shoppingCartItems: []
+            }
+
+        case CART_TOTAL:
+            return{
+                ...state,
+                cartTotal: state.cartTotal + Number(action.payload)
             }
 
         default:

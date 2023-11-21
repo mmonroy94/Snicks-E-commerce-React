@@ -1,7 +1,7 @@
 import style from './CartCard.module.css'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
-import { addItemCart, decreaseQuantity, deleteItemCart } from '../../redux/actions'
+import { addItemCart, cartTotal, decreaseQuantity, deleteItemCart } from '../../redux/actions'
 
 const CartCard = ({id, name, price, image, quantity}) => {
     const dispatch = useDispatch()
@@ -14,14 +14,17 @@ const CartCard = ({id, name, price, image, quantity}) => {
     
     const addItem = () => {
           dispatch(addItemCart(item))
+          dispatch(cartTotal(item.price))
       };
 
     const decreaseItemQuantity = () => {
         dispatch(decreaseQuantity(item))
+        dispatch(cartTotal(-item.price))
     }
 
     const deleteItem = () => {
         dispatch(deleteItemCart(item))
+        dispatch(cartTotal(-(quantity * item.price)))
     }
 
     return(

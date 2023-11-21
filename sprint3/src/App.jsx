@@ -4,6 +4,7 @@ import Home from './Views/Home/Home';
 import Login from './Views/Login/Login'
 import Footer from './Components/Footer/Footer'
 import Store from './Views/Store/Store';
+import AdminHome from './Views/Admin/AdminHome/AdminHome';
 import { Route, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from "react-redux"
@@ -27,6 +28,7 @@ function App() {
         <Route path='/inicioSesion' element={ <Login/> } />
         <Route path='/registro' element={ <Logup/> } />
         <Route path='/tienda' element={ <Store/> } />
+        <Route path='/admin' element={ <AdminHome/> }/>
       </Routes>
       <Footer/>
     </div>

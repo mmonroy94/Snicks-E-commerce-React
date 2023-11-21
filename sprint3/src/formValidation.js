@@ -42,3 +42,36 @@ export const validateLogup = (data) => {
   
      return errors;
   };
+
+
+  export const validateProduct = (data) => {
+    let errors = {};
+  
+    if (data.name === "" || data.name.length > 20 || data.name.length < 3) {
+      errors.name = "Ingresa un nombre de minimo 3 y máximo 20 caracteres";
+    }
+  
+    if (!/https?:\/\/.*\.(?:png|jpg|gif|bmp|svg|jpeg)/i.test(data.image)) {
+      errors.image = "Ingresa la URL en un formato valido";
+    }
+
+    if (data.brand || data.brand === "" || data.brand.length > 20) {
+      errors.brand = "Ingresa una marca menor a 20 caracteres";
+    }
+
+    if (data.detail === "" || data.detail.length < 10) {
+      errors.detail = "El detalle debe ser mayor a 10 caracteres";
+    }
+    if (data.price.trim() === "") {
+      errors.price = "Ingresa un precio de producto";
+    } else if (isNaN(Number(data.price))) {
+      errors.price = "El precio debe ser en números";
+    }
+    if (data.stock.trim() === "") {
+      errors.stock = "Ingresa cantidad de stock";
+    } else if (isNaN(Number(data.stock))) {
+      errors.stock = "La cantidad del stock debe ser un número";
+    }
+  
+     return errors;
+  };

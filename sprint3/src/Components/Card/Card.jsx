@@ -1,7 +1,7 @@
 import style from './Card.module.css'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
-import { addItemCart } from '../../redux/actions'
+import { addItemCart, cartTotal } from '../../redux/actions'
 import { Toast } from 'react-bootstrap';
 
 const Card = ({id,name, type, brand, gender, price,image}) => {
@@ -17,6 +17,7 @@ const [showToast, setShowToast] = useState(false);
 
 const addItem = () => {
       dispatch(addItemCart(item))
+      dispatch(cartTotal(item.price))
       setShowToast(true)
   };
 
