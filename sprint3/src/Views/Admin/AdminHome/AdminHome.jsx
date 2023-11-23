@@ -3,90 +3,126 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import axios from 'axios';
 import { validateProduct } from '../../../formValidation';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'; 
 
 const AdminHome = () => {
     const dispatch = useDispatch()
+    const products = useSelector(state => state.allProducts)    
 
-    const genders = ['Mujer','Hombre', 'Unisex']
-    const [data, setData] = useState({
-        name: '',
-        brand: '',
-        price: '',
-        stock: '',
-        detail: '',
-        image: '',
-        gender: []
-    })
+    // const genders = ['Mujer','Hombre', 'Unisex']
+    // const [data, setData] = useState({
+    //     name: '',
+    //     brand: '',
+    //     price: '',
+    //     stock: '',
+    //     detail: '',
+    //     image: '',
+    //     gender: []
+    // })
   
-    const [errors, setErrors] = useState({
-        name: '',
-        brand: '',
-        price: '',
-        stock: '',
-        detail: '',
-        image: ''
-    })
+    // const [errors, setErrors] = useState({
+    //     name: '',
+    //     brand: '',
+    //     price: '',
+    //     stock: '',
+    //     detail: '',
+    //     image: ''
+    // })
 
-    const handleChange = (event) =>{
-        const { name, value } = event.target;
-        if(name==="gender"){
-            if(value==='') return data
-            if(!data.gender.includes(value)){
-                return setData({
-                        ...data,
-                        [name]: [...data[name], value]
-                      })
-            }}else{
-                setData({
-                    ...data,
-                    [name]: value
-                    })
-                }
-                const newErrors = validateProduct({
-                    ...data,
-                    [name]: value,
-                  });
-                  setErrors(newErrors);
-    }
+    // const handleChange = (event) =>{
+    //     const { name, value } = event.target;
+    //     if(name==="gender"){
+    //         if(value==='') return data
+    //         if(!data.gender.includes(value)){
+    //             return setData({
+    //                     ...data,
+    //                     [name]: [...data[name], value]
+    //                   })
+    //         }}else{
+    //             setData({
+    //                 ...data,
+    //                 [name]: value
+    //                 })
+    //             }
+    //             const newErrors = validateProduct({
+    //                 ...data,
+    //                 [name]: value,
+    //               });
+    //               setErrors(newErrors);
+    // }
   
-    const disableByEmptyProps = () => {
-      let disabledAux = true;
-      if (data.email === "" || data.password === "") {
-        disabledAux = true;
-      } else {
-        disabledAux = false;
-      }
-      return disabledAux;
-    }
+    // const disableByEmptyProps = () => {
+    //   let disabledAux = true;
+    //   if (data.email === "" || data.password === "") {
+    //     disabledAux = true;
+    //   } else {
+    //     disabledAux = false;
+    //   }
+    //   return disabledAux;
+    // }
   
-    const handleSubmit = (ev) => {
-      ev.preventDefault();
+    // const handleSubmit = (ev) => {
+    //   ev.preventDefault();
   
-      axios.post('https://jsonplaceholder.typicode.com/posts', data)
-        .then((response) => {
-          console.log('Producto creado exitosamente:', response.data);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-    };
+    //   axios.post('https://jsonplaceholder.typicode.com/posts', data)
+    //     .then((response) => {
+    //       console.log('Producto creado exitosamente:', response.data);
+    //     })
+    //     .catch((error) => {
+    //       console.error('Error:', error);
+    //     });
+    // };
     
-    const handleDelete = (event) => {
-        const { name } = event.target;
-        setData({
-        ...data,
-        [name]: [...data[name].filter(element=> element!==event.target.id)]
-        })
+    // const handleDelete = (event) => {
+    //     const { name } = event.target;
+    //     setData({
+    //     ...data,
+    //     [name]: [...data[name].filter(element=> element!==event.target.id)]
+    //     })
 
-    }
+    // }
 
     return(
 
               <div className='d-flex flex-column justify-content-center align-items-center '>
                 <h2 className="display-6">Inventario</h2>
-                <p className="lead text-secondary px-2">Creación y edición</p>
+                <p className="lead text-secondary px-2">Creación y edición de productos</p>
+                <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    {/* <th scope="col">Imagen</th> */}
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Género</th>
+                    <th scope="col">Precio - USD</th>
+                    <th scope="col">Stock/Cantidad</th>
+                    <th scope="col">Modificar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                {products?.map((product, index) => {
+                return (
+                    <tr>
+                    <th scope="row">{index}</th>
+                    {/* <td><img src={product.image} alt={product.name} className=''/></td> */}
+                    <td>{product.name}</td>
+                    <td>{product.type}</td>
+                    <td>{product.brand}</td>
+                    <td>{product.gender}</td>
+                    <td>{product.price}</td>
+                    <td>PDTE</td>
+                    <td><button className="px-3 py-1 mx-2 btn btn-outline-primary" type="button"><i class="bi bi-pencil"></i></button></td>
+                    <td><button className="px-3 py-1 mx-2 btn btn-outline-primary">Ver detalle</button></td>  
+                    </tr>
+                )
+            })}
+                </tbody>
+                </table>
               </div>  
+              
 
     )   
 }

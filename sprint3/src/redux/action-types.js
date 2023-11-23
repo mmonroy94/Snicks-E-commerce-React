@@ -6,3 +6,4 @@ export const DECREASE_ITEM_QUANTITY = 'DECREASE_ITEM_QUANTITY';
 export const DELETE_ITEM_CART = 'DELETE_ITEM_CART';
 export const CLEAR_CART = 'CLEAR_CART'; 
 export const CART_TOTAL = 'CART_TOTAL';
+export const ROLE = 'ROLE';
