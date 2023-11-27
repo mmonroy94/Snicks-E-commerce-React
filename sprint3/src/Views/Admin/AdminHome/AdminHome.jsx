@@ -157,10 +157,6 @@ const AdminHome = () => {
                     </div>
 
                     <div class="mb-2">
-                      <label for="name" class="form-label">Nombre producto</label>
-                      <input type="text" class="form-control" id="name" value={selectedProduct.name}/>
-                    </div>
-                    <div class="mb-2">
                       <label for="type" class="form-label">Tipo (Estilo / Funcionalidad)</label>
                       <input type="text" class="form-control" id="type" value={selectedProduct.type}/>
                     </div>
