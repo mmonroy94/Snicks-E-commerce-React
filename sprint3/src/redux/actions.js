@@ -1,4 +1,4 @@
-import { GET_ALL_PRODUCTS, SIGN_IN, SHOW_CART, ADD_ITEM_CART, DELETE_ITEM_CART, DECREASE_ITEM_QUANTITY, CLEAR_CART, CART_TOTAL, ROLE } from "./action-types";
+import { GET_ALL_PRODUCTS, SET_FILTERED_PRODUCTS, SIGN_IN, SHOW_CART, ADD_ITEM_CART, DELETE_ITEM_CART, DECREASE_ITEM_QUANTITY, CLEAR_CART, CART_TOTAL, ROLE } from "./action-types";
 import axios from 'axios';
 
 export const getAllProducts = () => {
@@ -7,6 +7,17 @@ export const getAllProducts = () => {
                 const { data } = await axios.get('json/db.json')
                 console.log('ESTOS SON LOS PRODUCTOS', data);
                 dispatch({ type: GET_ALL_PRODUCTS, payload: data})
+            }
+        catch(error){
+            alert(error.response.data) 
+        }
+    }
+}
+
+export const setFilteredProducts = (products) => {
+    return async (dispatch) => {
+        try{
+                dispatch({ type: SET_FILTERED_PRODUCTS, payload: products})
             }
         catch(error){
             alert(error.response.data) 

@@ -49,7 +49,7 @@ const Logup = () => {
 
   const disableByEmptyProps = () => {
     let disabledAux = true;
-    if (data.name === "" || data.email === "" || data.password === "" || data.passwordConfirmation === "" || data.address === "" || data.cellphone === "") {
+    if (errors.name || errors.email || errors.password || errors.passwordConfirmation || errors.address || errors.cellphone) {
       disabledAux = true;
     } else {
       disabledAux = false;
@@ -62,9 +62,9 @@ const Logup = () => {
 
     axios.post('https://jsonplaceholder.typicode.com/posts', data)
       .then((response) => {
-        console.log('Registro exitoso:', response.data);
+        alert('Registro exitoso!');
         dispatch(signIn(true))
-        navigate("/inicio")
+        navigate("/")
       })
       .catch((error) => {
         console.error('Error:', error);

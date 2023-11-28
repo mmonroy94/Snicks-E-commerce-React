@@ -1,14 +1,24 @@
 import Card from '../Card/Card'
-import { useSelector } from 'react-redux' 
+import { useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
 
 const Cards = () => {
 const products = useSelector(state => state.allProducts)
+const filteredProducts = useSelector(state => state.filteredProducts)
 
+const [data, setData] = useState([]);
+
+useEffect(() => {
+    setData(filteredProducts ? filteredProducts : products);
+  }, [filteredProducts, products]);
+
+console.log('PRODUCTOS CARDS', data);
 console.log('PRODUCTOS RECIBIDOS EN CARDS', products);
+
     return(
         <div className='container'>
             <div className='row'>
-            {products?.map((product, index) => {
+            {data && data.map((product, index) => {
                 return (
                     <div key={index} className="col-md-3 mb-4">
                     <Card

@@ -1,4 +1,5 @@
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
+export const SET_FILTERED_PRODUCTS = 'SET_FILTERED_PRODUCTS';
 export const SIGN_IN = 'SIGN_IN';
 export const SHOW_CART = 'SHOW_CART';
 export const ADD_ITEM_CART = 'ADD_ITEM_CART';

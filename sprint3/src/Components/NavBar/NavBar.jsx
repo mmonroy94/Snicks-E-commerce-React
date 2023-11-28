@@ -2,13 +2,17 @@ import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { signIn, showCart } from "../../redux/actions";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
+import style from './NavBar.module.css' 
+import { setFilteredProducts } from "../../redux/actions";
+
 
 const NavBar = () => {
   const dispatch = useDispatch()
   const location = useLocation()
   const userLogged = useSelector(state => state.userLogged)
+  const allProducts = useSelector(state => state.allProducts) 
 
   const signOut = () => {
     dispatch(signIn(false))
@@ -18,6 +22,36 @@ const NavBar = () => {
 
   const showShoppingCart = () => {
     setIsShoppingCartOpen(true);
+  };
+
+  const [productsState, setProductsState] = useState({
+    productsOriginal: [],
+    productsCopy: []
+  });
+
+  const [filters, setFilters] = useState({
+    productName: ''
+  });
+
+  useEffect(() => {
+    if (allProducts !== undefined) {
+      setProductsState({ productsOriginal: allProducts, productsCopy: allProducts });
+    }
+  }, []);
+
+  const searchHandleChange = (event) => {
+    const { value } = event.target;
+      setFilters({ ...filters, productName: value });
+      setProductsState({ ...productsState, productsOriginal: productsState.productsCopy });
+      filterSalesByProductName();
+  };
+
+  const filterSalesByProductName = () => {
+    const filteredProducts = [...productsState.productsCopy].filter((product) => {
+      return product.name.toLowerCase().includes(filters.productName.toLowerCase());
+    });
+    setProductsState({ ...productsState, productsOriginal: filteredProducts });
+    dispatch(setFilteredProducts(filteredProducts))
   };
 
   return (
@@ -59,14 +93,13 @@ const NavBar = () => {
                 <div className="d-flex">
                   <form className="d-flex" role="search">
                     <input
-                      className="form-control me-2"
-                      type="search"
-                      placeholder=""
+                      className={`form-control me-2 ${style.searchInput}`}
+                      type="text"
                       aria-label="Search"
+                      placeholder="Buscar por nombre de producto"
+                      value={filters.productName}
+                      onChange={searchHandleChange}
                     />
-                    <button className="btn btn-outline-primary" type="submit">
-                      Buscar
-                    </button>
                   </form>
                 </div>
               )}

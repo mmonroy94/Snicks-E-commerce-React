@@ -7,6 +7,7 @@ import axios from "axios";
 import { signIn } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
 import style from './Login.module.css'
+import Footer from '../../Components/Footer/Footer'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -20,6 +21,13 @@ const Login = () => {
     email: '',
     password: ''
   })
+
+  const [touchedFields, setTouchedFields] = useState({});
+
+  const handleFocus = (name) => {
+    setTouchedFields({ ...touchedFields, [name]: true });
+  };
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -74,10 +82,11 @@ const Login = () => {
 
               <form onSubmit={handleSubmit} id="loginForm" className="container col">
 
-                <div className="pt-4" id="emailContainer">
+
+                <div className="mb-3" id="emailContainer">
                   <label htmlFor="email" className="form-label">Correo electrónico</label>
-                  <input onChange={handleChange} type="email" name='email' id="emailInput" placeholder="ejemplo@correo.com" value={data.email} className="form-control" />
-                  <div className="error-container">
+                  <input onChange={handleChange} onFocus={() => handleFocus('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`} type="email" name='email' id="emailInput" placeholder="ejemplo@correo.com" value={data.email} />
+                  <div class="invalid-feedback">
                     {errors.email ? (
                       <p className='text-danger'>{errors.email}</p>
                     ) : (
@@ -108,6 +117,7 @@ const Login = () => {
         </div>
 
       </div>
+      <Footer />
     </div>
   )
 
