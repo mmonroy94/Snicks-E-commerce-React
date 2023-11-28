@@ -30,7 +30,7 @@ function App() {
         <Route path='/tienda' element={ <Store/> } />
         <Route path='/admin' element={ <AdminHome/> }/>
       </Routes>
-      <Footer/>
+
     </div>
   );
 }

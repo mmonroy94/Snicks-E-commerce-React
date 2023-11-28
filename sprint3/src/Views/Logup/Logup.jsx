@@ -5,6 +5,7 @@ import { validateLogup } from '../../formValidation'
 import { signIn } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
 import style from './Logup.module.css'
+import Footer from '../../Components/Footer/Footer';
 
 const Logup = () => {
   const dispatch = useDispatch()
@@ -19,13 +20,19 @@ const Logup = () => {
   })
 
   const [ errors, setErrors] = useState({
-    name: '',
+    name: 'Ingresa un nombre de mínimo 3 y máximo 20 caracteres',
     email: '',
     password: '',
     passwordConfirmation: '',
     address: '',
     cellphone: ''
   })
+
+  const [touchedFields, setTouchedFields] = useState({});
+
+  const handleFocus = (name) => {
+    setTouchedFields({ ...touchedFields, [name]: true });
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -66,18 +73,21 @@ const Logup = () => {
 
     return(
       <div className={`container ${style.logupComponent}`}>
-      <div className={style.logup}>
+
 
         {/* CONTENEDOR TEXTO Y FORMULARIO */}
 
-        <div className="col-md-5 text-container p-4 d-flex flex-column h-100 mb-5">
-          <h2 className="display-4">Registro</h2>
+        <div className="col-md-5 text-container d-flex flex-column">
+          <h2 className={`display-4 ${style.logupTitle}`}>Registro</h2>
+          <p>Estamos a un paso de compartir nuestra pasión por los zapatos 💛</p>
+          <hr/>
           <form onSubmit={handleSubmit} id="logupForm" className="col">
           
-          <div className="mb-1 pt-1" id="nameContainer">
+          <div className="mb-3" id="nameContainer">
             <label htmlFor="nameInput" className="form-label">Nombre</label>
-            <input onChange={handleChange} type="text" className="form-control" name='name' id="nameInput" value={data.name}/>
-            <div className="error-container">
+            <input onChange={handleChange} onFocus={() => handleFocus('name')} type="text" className={`form-control ${errors.name ? 'is-invalid' : ''}`} name='name' id="nameInput" value={data.name} required/>
+          
+              <div class="invalid-feedback">
               {errors.name ? (
                 <p className='text-danger'>{errors.name}</p>
               ) : (
@@ -86,21 +96,24 @@ const Logup = () => {
             </div>
           </div>
 
-          <div className="mb-1 pt-1" id="emailContainer">
+          <div className="mb-3" id="emailContainer">
             <label htmlFor="emailInput" className="form-label">Correo electrónico</label>
-            <input onChange={handleChange} type="email" className="form-control" name='email' id="emailInput" placeholder="ejemplo@correo.com" value={data.email}/>
-            <div className="error-container">
+            <input onChange={handleChange} onFocus={() => handleFocus('email')} type="email" className={`form-control ${touchedFields.email && errors.email ? 'is-invalid' : ''}`} name='email' id="emailInput" placeholder="ejemplo@correo.com" value={data.email} required/>
+            {touchedFields.email && errors.email &&(
+            <div class="invalid-feedback">
               {errors.email ? (
                 <p className='text-danger'>{errors.email}</p>
               ) : (
                 <p></p>
               )}
             </div>
+            )}
           </div>
 
-          <div className="mb-1 pt-1" id="passwordContainer">
+          <div className="mb-3" id="passwordContainer">
             <label htmlFor="passwordInput" className="form-label">Contraseña</label>
-            <input onChange={handleChange} type="password" className="form-control" name='password' id="passwordInput" value={data.password}/>
+            <input onChange={handleChange} type="password" onFocus={() => handleFocus('password')} className={`form-control ${touchedFields.password && errors.password ? 'is-invalid' : ''}`} name='password' id="passwordInput" value={data.password}/>
+            {touchedFields.password && errors.password &&(
             <div className="error-container">
               {errors.password ? (
                 <p className='text-danger'>{errors.password}</p>
@@ -108,11 +121,13 @@ const Logup = () => {
                 <p></p>
               )}
             </div>
+            )}
           </div>
 
-          <div className="mb-1 pt-1" id="passwordConfirmationContainer">
+          <div className="mb-3" id="passwordConfirmationContainer">
             <label htmlFor="passwordConfirmationInput" className="form-label">Confirmar contraseña</label>
-            <input onChange={handleChange} type="password" className="form-control" name='passwordConfirmation' id="passwordConfirmationInput" value={data.passwordConfirmation}/>
+            <input onChange={handleChange} type="password" onFocus={() => handleFocus('passwordConfirmation')} className={`form-control ${touchedFields.passwordConfirmation && errors.passwordConfirmation ? 'is-invalid' : ''}`} name='passwordConfirmation' id="passwordConfirmationInput" value={data.passwordConfirmation}/>
+            {touchedFields.passwordConfirmation && errors.passwordConfirmation &&(
             <div className="error-container">
               {errors.passwordConfirmation ? (
                 <p className='text-danger'>{errors.passwordConfirmation}</p>
@@ -120,11 +135,13 @@ const Logup = () => {
                 <p></p>
               )}
             </div>
+            )}
           </div>
 
-          <div className="mb-1 pt-1" id="addressContainer">
+          <div className="mb-3" id="addressContainer">
             <label htmlFor="addressInput" className="form-label">Dirección</label>
-            <input onChange={handleChange} type="text" className="form-control" name='address' id="addressInput" value={data.address}/>
+            <input onChange={handleChange} type="text" onFocus={() => handleFocus('address')} className={`form-control ${touchedFields.address && errors.address ? 'is-invalid' : ''}`} name='address' id="addressInput" value={data.address}/>
+            {touchedFields.address && errors.address &&(
             <div className="error-container">
               {errors.address ? (
                 <p className='text-danger'>{errors.address}</p>
@@ -132,11 +149,13 @@ const Logup = () => {
                 <p></p>
               )}
             </div>
+              )}
           </div>
 
-          <div className="mb-1 pt-1" id="cellphoneContainer">
+          <div className="mb-3" id="cellphoneContainer">
             <label htmlFor="cellphoneInput" className="form-label">Celular</label>
-            <input onChange={handleChange} type="text" className="form-control" name='cellphone' id="cellphoneInput" value={data.cellphone} />
+            <input onChange={handleChange} type="text" onFocus={() => handleFocus('cellphone')} className={`form-control ${touchedFields.cellphone && errors.cellphone ? 'is-invalid' : ''}`}name='cellphone' id="cellphoneInput" value={data.cellphone} />
+            {touchedFields.cellphone && errors.cellphone &&(
             <div className="error-container">
               {errors.cellphone ? (
                 <p className='text-danger'>{errors.cellphone}</p>
@@ -144,17 +163,19 @@ const Logup = () => {
                 <p></p>
               )}
             </div>
+             )}
           </div>
 
-          <button type="submit" className="btn btn-primary" id="submitButton" disabled={disableByEmptyProps()}> Registrarme </button>
+          <button type="submit" className='btn btn-primary' id="submitButton" disabled={disableByEmptyProps()}> Registrarme </button>
         </form>
 
-        <div className="pt-4">
+        <div className={`pt-4 ${style.logupLastElement}`}>
             <p>Ya tengo una cuenta, <NavLink to='/inicioSesion'>quiero iniciar sesión.</NavLink></p>
           </div>
 
       </div>
-      </div>
+
+      <Footer />
       </div>
 
     )
