@@ -22,7 +22,7 @@ const NavBar = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg mt-0 bg-body-tertiary fixed-top">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div className="container">
 
           {location.pathname === '/admin' ?
