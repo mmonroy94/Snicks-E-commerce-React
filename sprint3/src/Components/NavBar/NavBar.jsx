@@ -5,8 +5,7 @@ import { useLocation } from "react-router-dom";
 import { useState,useEffect } from "react";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import style from './NavBar.module.css' 
-import { setFilteredProducts } from "../../redux/actions";
-
+import { setFilteredProducts, getAllProducts } from "../../redux/actions";
 
 const NavBar = () => {
   const dispatch = useDispatch()
@@ -39,10 +38,13 @@ const NavBar = () => {
     }
   }, []);
 
+  const resetProducts = () => {
+    dispatch(setFilteredProducts())
+  };
+
   const searchHandleChange = (event) => {
     const { value } = event.target;
       setFilters({ ...filters, productName: value });
-      setProductsState({ ...productsState, productsOriginal: productsState.productsCopy });
       filterSalesByProductName();
   };
 
@@ -50,7 +52,6 @@ const NavBar = () => {
     const filteredProducts = [...productsState.productsCopy].filter((product) => {
       return product.name.toLowerCase().includes(filters.productName.toLowerCase());
     });
-    setProductsState({ ...productsState, productsOriginal: filteredProducts });
     dispatch(setFilteredProducts(filteredProducts))
   };
 
@@ -83,7 +84,7 @@ const NavBar = () => {
                     <NavLink to={"/"} className="nav-link nav-link-hover" aria-current="page">Inicio</NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to={"/tienda"} className="nav-link nav-link-hover" aria-current="page">Tienda</NavLink>
+                    <NavLink to={"/tienda"} className="nav-link nav-link-hover" aria-current="page" onClick={resetProducts}>Tienda</NavLink>
                   </li>
                 </ul>
               )}
@@ -96,9 +97,9 @@ const NavBar = () => {
                       className={`form-control me-2 ${style.searchInput}`}
                       type="text"
                       aria-label="Search"
-                      placeholder="Buscar por nombre de producto"
                       value={filters.productName}
                       onChange={searchHandleChange}
+                      placeholder="Busca por nombre de producto"
                     />
                   </form>
                 </div>

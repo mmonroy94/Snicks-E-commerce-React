@@ -12,7 +12,7 @@ const Store = () => {
 
     return(
     <div>
-        <div className="container pt-5 mt-5">
+        <div className="container pt-5 mt-5">              
             <div className="row">
             <div className="col text-center">
                 <h5></h5>
