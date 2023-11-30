@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'; 
 import { useState } from 'react';
 import { Modal } from "antd";
+import style from './AdminHome.module.css'
 
 const AdminHome = () => {
     const products = useSelector(state => state.allProducts)    
@@ -27,6 +28,19 @@ const AdminHome = () => {
             gender: []
         }
     );
+
+    const handleChange = (event) => {
+      const { name, value } = event.target;
+      setData({
+        ...data,
+        [name]: value,
+      });
+      const newErrors = validateLogup({
+        ...data,
+        [name]: value,
+      });
+      setErrors(newErrors);
+    };
 
     // const genders = ['Mujer','Hombre', 'Unisex']
     // const [data, setData] = useState({
@@ -104,9 +118,12 @@ const AdminHome = () => {
     return(
 
               <div className='d-flex flex-column justify-content-center align-items-center '>
-                <h2 className="display-6">Inventario</h2>
+                <div className={style.adminHomeTitle}>
+                <h2 className="display-6 text-center">Inventario</h2>
                 <p className="lead text-secondary px-2">Creación y edición de productos</p>
-                <table class="table table-striped">
+                </div>
+
+                <table class="table table-striped mb-5">
                 <thead>
                   <tr>
                     <th scope="col">Id</th>
@@ -147,12 +164,17 @@ const AdminHome = () => {
                   onOk={modalHandleClose}
                   onCancel={modalHandleClose}
                   >
-                  <form class="was-validated">
+               
+                  <form onSubmit={handleSubmit} id="productForm" className="col">
                     <div class="mb-3">
                       <label for="name" class="form-label">Nombre producto</label>
-                      <input type="text" class="form-control" id="name" value={selectedProduct.name} required/>
+                      <input onChange={handleChange} onFocus={() => handleFocus('name')} type="text" className={`form-control ${errors.name ? 'is-invalid' : ''}`} id="name" value={selectedProduct.name} required/>
                       <div class="invalid-feedback">
-                        Ingresa un nombre de producto de minimo 3 y maximo 20 caracteres
+                        {errors.name ? (
+                          <p className='text-danger'>{errors.name}</p>
+                        ) : (
+                          <p></p>
+                        )}
                       </div>
                     </div>
 

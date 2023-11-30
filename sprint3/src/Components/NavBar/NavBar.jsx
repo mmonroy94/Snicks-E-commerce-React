@@ -73,10 +73,10 @@ const NavBar = () => {
             {location.pathname === '/admin' ?
               (<ul className="navbar-nav">
                 <li className="nav-item">
-                  <NavLink to={"/"} className="nav-link nav-link-hover" aria-current="page">Productos</NavLink>
+                  <NavLink to={"/admin"} className="nav-link nav-link-hover" aria-current="page">Productos</NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink to={"/tienda"} className="nav-link nav-link-hover" aria-current="page">Compras</NavLink>
+                  <NavLink to={"/admin"} className="nav-link nav-link-hover" aria-current="page">Compras</NavLink>
                 </li>
               </ul>) : (
                 <ul className="navbar-nav">
